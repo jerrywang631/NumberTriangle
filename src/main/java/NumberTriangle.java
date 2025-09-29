@@ -57,13 +57,14 @@ public class NumberTriangle {
      * Set the root of this NumberTriangle to be the max path sum
      * of this NumberTriangle, as defined in Project Euler problem 18.
      * After this method is called, this NumberTriangle should be a leaf.
-     *
+     * <p>
      * Hint: think recursively and use the idea of partial tracing from first year :)
-     *
+     * <p>
      * Note: a NumberTriangle contains at least one value.
      */
     public void maxSumPath() {
-        // for fun [not for credit]:
+
+
     }
 
 
@@ -76,27 +77,48 @@ public class NumberTriangle {
      * Follow path through this NumberTriangle structure ('l' = left; 'r' = right) and
      * return the root value at the end of the path. An empty string will return
      * the root of the NumberTriangle.
-     *
+     * <p>
      * You can decide if you want to use a recursive or an iterative approach in your solution.
-     *
+     * <p>
      * You can assume that:
-     *      the length of path is less than the height of this NumberTriangle structure.
-     *      each character in the string is either 'l' or 'r'
+     * the length of path is less than the height of this NumberTriangle structure.
+     * each character in the string is either 'l' or 'r'
      *
      * @param path the path to follow through this NumberTriangle
      * @return the root value at the location indicated by path
      *
      */
     public int retrieve(String path) {
-        // TODO implement this method
-        return -1;
+
+        NumberTriangle curr = this;
+        for (int i = 0; i < path.length(); i++) {
+            char ch = path.charAt(i);
+            if (ch == 'l') {
+                if (curr.left == null) {
+                    throw new IllegalArgumentException();
+                }
+                curr = curr.left;
+            }
+            if (ch == 'r') {
+                if (curr.right == null) {
+                    throw new IllegalArgumentException();
+                }
+                curr = curr.right;
+            }
+            else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        return curr.root;
     }
 
-    /** Read in the NumberTriangle structure from a file.
-     *
+    /**
+     * Read in the NumberTriangle structure from a file.
+     * <p>
      * You may assume that it is a valid format with a height of at least 1,
      * so there is at least one line with a number on it to start the file.
-     *
+     * <p>
      * See resources/input_tree.txt for an example NumberTriangle format.
      *
      * @param fname the file to load the NumberTriangle structure from
