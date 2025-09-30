@@ -90,8 +90,28 @@ public class NumberTriangle {
      *
      */
     public int retrieve(String path) {
-        // TODO implement this method
-        return -1;
+
+        NumberTriangle curr = this;
+        for (int i = 0; i < path.length(); i++) {
+            char ch = path.charAt(i);
+            if (ch == 'l') {
+                if (curr.left == null) {
+                    throw new IllegalArgumentException();
+                }
+                curr = curr.left;
+            }
+            else if (ch == 'r') {
+                if (curr.right == null) {
+                    throw new IllegalArgumentException();
+                }
+                curr = curr.right;
+            }
+            else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        return curr.root;
     }
 
     /**
