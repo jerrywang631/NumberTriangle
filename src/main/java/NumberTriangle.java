@@ -65,7 +65,27 @@ public class NumberTriangle {
      * Note: a NumberTriangle contains at least one value.
      */
     public void maxSumPath() {
-        // for fun [not for credit]:
+        if (this.left == null && this.right == null){return;}
+        if (this.left != null){
+            this.left.maxSumPath();
+        }
+        if (this.right != null){
+            this.right.maxSumPath();
+        }
+        int longest;
+        if (this.left != null && this.right != null){
+            longest = Math.max(left.root, right.root);
+        }
+        else if (this.left != null){
+            longest = left.root;
+        }
+        else{
+            longest = right.root;
+        }
+        this.root += longest;
+        this.left = null;
+        this.right = null;
+
     }
 
 
