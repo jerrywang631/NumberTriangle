@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
@@ -92,11 +94,12 @@ public class NumberTriangle {
         return -1;
     }
 
-    /** Read in the NumberTriangle structure from a file.
-     *
+    /**
+     * Read in the NumberTriangle structure from a file.
+     * <p>
      * You may assume that it is a valid format with a height of at least 1,
      * so there is at least one line with a number on it to start the file.
-     *
+     * <p>
      * See resources/input_tree.txt for an example NumberTriangle format.
      *
      * @param fname the file to load the NumberTriangle structure from
@@ -107,10 +110,12 @@ public class NumberTriangle {
         // open the file and get a BufferedReader object whose methods
         // are more convenient to work with when reading the file contents.
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
+        if (inputStream == null) {
+            throw new IOException("Resource not found on classpath: " + fname);}
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
 
-        // TODO define any variables that you want to use to store things
+        List<NumberTriangle> previous = null;
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
@@ -119,17 +124,31 @@ public class NumberTriangle {
         String line = br.readLine();
         while (line != null) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
 
-            // TODO process the line
+            String[] parts = line.split("\\s+");
+            List<NumberTriangle> curr = new ArrayList<>(parts.length) {
+            };
+            for (String p : parts) {
+                curr.add(new NumberTriangle(Integer.parseInt(p)));
+            }
+            if (previous == null) {
+                top = curr.get(0);
+            } else {
+                for (int i = 0; i < previous.size(); i++) {
+                    NumberTriangle parent = previous.get(i);
+                    parent.setLeft(curr.get(i));
+                    parent.setRight(curr.get(i + 1));
 
+                }
+                previous = curr;
+            }
             //read the next line
             line = br.readLine();
         }
         br.close();
         return top;
     }
+
 
     public static void main(String[] args) throws IOException {
 
