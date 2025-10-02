@@ -180,8 +180,8 @@ public class NumberTriangle {
                     parent.setRight(curr.get(i + 1));
 
                 }
-                previous = curr;
             }
+            previous = curr;
             //read the next line
             line = br.readLine();
         }
